@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bleddeasne Kobiety</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        :root {
+            --primary-yellow: #FFD700;
+            --secondary-yellow: #FFC800;
+            --dark-black: #111111;
+            --light-black: #2D2D2D;
+            --accent-gray: #4A4A4A;
+            --hover-yellow: #FFE44D;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 36px;
+            height: 60px;
+            background: var(--dark-black);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo a {
+            display: inline-block;
+            color: var(--primary-yellow);
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            animation: logoGlow 2s infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            from { text-shadow: 0 0 5px var(--primary-yellow), 0 0 10px var(--primary-yellow); }
+            to { text-shadow: 0 0 20px var(--primary-yellow), 0 0 30px var(--primary-yellow); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-yellow);
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-yellow);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-links a:hover {
+            color: var(--hover-yellow);
+            transform: translateY(-2px);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-icons img {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            filter: invert(1) sepia(1) saturate(5) hue-rotate(0deg);
+            transition: all 0.3s ease;
+        }
+
+        .nav-icons img:hover {
+            transform: rotate(10deg) scale(1.1);
+            filter: invert(1) sepia(1) saturate(5) hue-rotate(45deg);
+        }
+
+        .products {
+            margin-top: 80px;
+            padding: 20px;
+            background: var(--light-black);
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .products::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 0%, rgba(255,215,0,0.05) 50%, transparent 100%);
+            animation: shimmerBg 3s infinite linear;
+        }
+
+        @keyframes shimmerBg {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .section-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+            padding: 0 20px;
+            color: var(--primary-yellow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+            animation: slideInTitle 1s ease-out;
+        }
+
+        @keyframes slideInTitle {
+            from { 
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-yellow);
+            transform: scaleX(0);
+            animation: expandLine 0.8s ease-out forwards 0.5s;
+        }
+
+        @keyframes expandLine {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .product-card {
+            background: var(--dark-black);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 1px solid var(--accent-gray);
+            position: relative;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover::before {
+            border-color: var(--primary-yellow);
+            transform: scale(1.05);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            background: var(--accent-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,215,0,0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .product-card:hover .product-image::after {
+            transform: translateX(100%);
+        }
+
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        .product-info {
+            padding: 20px;
+            color: white;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-info {
+            transform: translateY(-5px);
+        }
+
+        .product-name {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--primary-yellow);
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .product-card:hover .product-name {
+            color: var(--hover-yellow);
+        }
+
+        .product-category {
+            color: #999;
+            margin-bottom: 12px;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .product-price {
+            font-weight: bold;
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover .product-price {
+            color: var(--primary-yellow);
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.2s; }
+        .product-card:nth-child(2) { animation-delay: 0.4s; }
+        .product-card:nth-child(3) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="Stronka.html">Bleddeasne</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="mezczyzni.html">Mężczyźni</a></li>
+            <li><a href="kobiety.html">Kobiety</a></li>
+            <li><a href="dzieci.html">Dzieci</a></li>
+            <li><a href="wyprzedaz.html">Wyprzedaż</a></li>
+            <li><a href="nowosci.html">Nowości</a></li>
+            <li><a href="kolekcje.html">Kolekcje</a></li>
+        </ul>
+        <div class="nav-icons">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTUuNSAxNGgtLjc5bC0uMjgtLjI3QzE1LjQxIDEyLjU5IDE2IDExLjExIDE2IDkuNSAxNiA1LjkxIDEzLjA5IDMgOS41IDNTMyA1LjkxIDMgOS41IDUuOTEgMTYgOS41IDE2YzEuNjEgMCAzLjA5LS41OSA0LjIzLTEuNTdsLjI3LjI4di43OWw1IDQuOTlMMjAuNDkgMTlsLTQuOTktNXptLTYgMEM3LjAxIDE0IDUgMTEuOTkgNSA5LjVTNy4wMSA1IDkuNSA1IDE0IDcuMDEgMTQgOS41IDExLjk5IDE0IDkuNSAxNHoiLz48L3N2Zz4=" alt="Search">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptMCAzYzEuNjYgMCAzIDEuMzQgMyAzcy0xLjM0IDMtMyAzLTMtMS4zNC0zLTMgMS4zNC0zIDMtM3ptMCAxNC4yYy0yLjUgMC00LjcxLTEuMjgtNi0zLjIyLjAzLTEuOTkgNC0zLjA4IDYtMy4wOCAxLjk5IDAgNS45NyAxLjA5IDYgMy4wOC0xLjI5IDEuOTQtMy41IDMuMjItNiAzLjIyeiIvPjwvc3ZnPg==" alt="Account">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNyAxOGMtMS4xIDAtMS45OS45LTEuOTkgMlM1LjkgMjIgNyAyMnMyLTAuOSAyLTItMC45LTItMi0yek0xIDJoMi4wMUw2LjYgMTEuNTloLTEuNThsLTEuMDEtNC4yNEgxVjJ6bTE2IDE2Yy0xLjEgMC0xLjk5LjktMS45OSAycy44OSAyIDEuOTkgMiAyLS45IDItMi0uOS0yLTItMnptLTEwLjA2LTlsMTQuMTQgMSAxLTEwSDQuOTFsLS43My0ySDFWNGgzLjE4bC4zMiAxLjI4TDcuNSA5eiIvPjwvc3ZnPg==" alt="Cart">
+        </div>
+    </nav>
+
+    <main class="products">
+        <h1 class="section-title">Obuwie i Odzież Damska</h1>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUSExMWFhUXFRcXFxgXGBgXHRgWFxgXFxcXFRUZHSggGBolHRYVITEhJSkrLi4uGB8zODMtNygtLisBCgoKDg0OFxAQFy0dHR0tLS0tLS0tLS0tLS0tKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tMP/AABEIALcBEwMBIgACEQEDEQH/xAAcAAAABwEBAAAAAAAAAAAAAAAAAQIDBAUGBwj/xABFEAABAwIDBAcFBQYEBQUAAAABAgMRACEEEjEFQVFhBhMicYGRoTJCsdHwBxRScsEjM2KS4fEWgqKyFVNzk8JDRFWDpP/EABkBAQEBAQEBAAAAAAAAAAAAAAABAgMEBf/EACERAQACAgIDAQADAAAAAAAAAAABEQISAyExQWFRBBMj/9oADAMBAAIRAxEAPwDpgNKC+FMAcadTXRkqfGlBVEKAoF5qOaRFHFQKoUmjmgUKOkg0oVAKOaGWhFFCaGejikxQDNQzUMtDLRB56GagE0YFFJmjpQTR5aBMUKUE0CmgTFCjo5oERR5aXNETQFkoZaOaIqoBloZaGehnoCNEDQK6KaBQVQpGahnoHJoU31lClCKKOaMJNCK0gA0YNFloZaBYNLTTYFLSKgURRZDShVftPbzDEhaiV2/ZtpU4u9h2EAkTxMCgnilEgCSQANSbVn8Vtd4gn9nh0byoh1fcQkhts8ypQ5VQYraWH1VmxChfM9+1FpOYNgJZEQbpqWrXf8fZJhoqeIkHqUlwAjcXB2E+JFMP9IchAWw4mRN8pAF9VIJSDbSayZ2/ingCyytTfuq6xDaYBjsj24ta9No2g8lQS4FoUdApfWIXxAXqlXL40HRcHjEOpC0G3OxB4Ecaekcq5ihKEKLgCgHCCqFKFxaImBFx31aBDZ0Kv+4v9DQbmRxFKy1hjk/j/wC4v50jrkp95wdzq/1ojexQrBHaqx7DzvipJ+KaUOkjyQJcVO8KQFR/KBPgaK3c0JrFs9L17y0r/KtHrKvhS8dtjHquwcKBuCkrX/r61H+2g2E0WasRhel+MaMYzBSne5hSVgcy0rtR+UqrWbM2i1iEZ2XAsb4sUngtB7SDyIBoJZVSSqjIpJoDmioqOgFFNKpJVQCaKaImkxVQomklVChVAojSqKgTRUvLQoGxQmjFDKagAXypYcpISaWE0BZ+VRNpbUSyBKFLUbJQgSpR8bJHFSiAONPY7FhpBWb8BxO4CsjjsQ48ZcVlT+BJiR/GoXPcIF99A7tHbKlSlxzLu6jDEkzwdxPZg74SUb7moKH1BOVAQyi/ZbAJJOpUojKSdTKSZ31HdABCUiAkTA52EcNFedRMe+ltCnFqhKRJjfwA4k0U/jcSy2M65WuYTJLiyo+6jMbdwgVm9pY1bySswCArIEqkSohCEk+8SozIscpqFiHFKQcS8ISQUtt71TokaQkxJOqo4QC7iMMXVNshQSVrkkCAMgKiUwbRcC++siRtLGpw77bOCClPJgLgq6uAm4UE+9oTGnM2q8O2OsHVvMuAkA5m0uLA4KjLmQoHcRNqr+jmEQCt1AhP7pr8iTKlTvK1ySeVXhXVRHwzhVKVa6GxHaA1g3AUm/KKXhXiD1ZP5e7hUHEYnK+ngRB9YJ8VR41KxQkZhqL+NVU4mkLNR8PiM4nfvHOjeJFRCxHGKPruNQyrjSDqKCeMSkU+jHJ3Gqx5IimI7J5Gg3H3F9N4B5Az8aaQhJVN23B7yeyod53jkZB4Va7FxPWMNr4pAPeOyfUGncVhEr1F9yhqPrhRnZDa28pohOKgJJhL6RCOQdH/AKZ/i9k/w6VeVlVuhKlMrIWNCNxBGhB+FQUYx3Z/aQFPYL3kTK8PzbJ1b5HTkKNNuRRRSNnY1p9tLrSgtCtCPUEbjyNMbY2yxhUhTy8oJgWJki+4UsSooZKbc2i0lBdKxkESoGQAd5jQXpva21ENYZzEFQyJQSDqCY7IEakmBSxI6ujCKzH2b9JTjcOcxzOtxnMQO1JAB5aeFasQTANxUjK4tSQgUMgpRQazPTvpL9waQqxWtcJB0IHtEndqKTNRcjRFqi6oU1s/GoeEtrCgI0vqAR6EVLyVbDXVihSyk0KliOBSXnUoSVLUEpGpUQAPE1hdtfaQhIy4dBUY9pQ9QjhzUR3VgdrbafxKpdcURuE2HduHcAPGtI6ftL7Q8G0rKkreMwrq02SN5lRAPcKu9i9IsNiv3LqVK3oPZWO9Bv4i1cFiKO8iJndGs8udS1p2bpNiCp5LY0QnMfzKkJ9Ar0qmWo8POoeAcVlJK1KObJmUSonqgGpKjcyUKM/xUtbyqqEpduo/xfC3xBrL7Udcxb5Q2EFpkiSskJLm/wBm6o0i2+9xTm2NrrTkZa/eO3mPYCjc99yeUU64tOHYUlHuIJ5kwTmVxJNRVY5i1qdUp1aClnMlASggKcKT7AKjJGVX8tT+jeAexeILbI7ScOsFagUpQpRSnMTGntREzeN9Z3ZaCue0ICiBlvJJylRvr2R5irhHTF/ZpUGWkQ4R21yZShIAQANIuZPE1B0/Z/QTqmkNl4dlIHZRad5Eq4zUbbnR4sNl1K84T7VohP4tTpv5Sd1c0e+13HK3tp7gfjNG19rGMKVIc6p1CklJCkjRQg3BnQ1Nik93EpW+USJyqgcbi3pVjhMYCmFEToZ48fGucqx4S6lclSYN4gmd8TxFavY20yoy2SZ87Xv61oWWNdWjtMqAUYFxI8t9NDa2OGqMKu3vNO374cFWjONdzJkBVj7QB4fOrBGPVvbQfD5UGIxm0sen2WW1X90L+BUKJnbWNEZsHm/LmHxmuhsbUaNlN5eYvU9p1tfsKSeVp8qDnA6QvaKwTvhJ9csUlG23BM4R64jd3jSumyBupXXJG6hTDbO6eOYdsIGHcgEmFNrOuozDSrRr7U2ye0w6gZd40Vu1AtWm65JpJSeNE1hz9PSxpbhVnGYkk9ofCZ+NaLZXSdkwC6kE6ZjlnwVFXhCN6UnvSDSHMBhViHMM2ofkBHlFRaZ/HYd3ClWKwCv2Zu8ym4t76E8BwFxutaq7pZ0q+/sttpbCVhYXqkgjKoHKskZRBB51sMP0fwKT2Gg3+SUeiajvdAcEucpWnMZ7KrTxCSCB4VnLG4HNFIdCSnr2EZoz/t2yTGgIQSdDpGs1V7Qx7iE9SH8zZ7SshXlJmRIWlN5EzHjWj299muMZUSyevbmQUQlQHBSJ1/LIPKsbtJlSCErSpB4KSUk+Bg1wzxqoJXn2d9KPuOIU4oKWktqSpKSBm0KTe1iPU1pcB9pq2nMQ4lkK61cgLWewncmAm5ub93Cub4fXvm2lDCK7cHQki9TaY8eh0bE/a5jVGEDDpB0hCyfElcelY3b3SB7GvdY+vMQIFgAALwALCmi0lIJsLVXqICbb6Z5X0S1fQ7pm9g3c4lxBCQtsnVKbApO4gabv06t0c+0LD4hKis9VCgBmkzI3ZQYjnXnpgkKnvqfsTHKbXI7QMyg6KHgQQeBBBB0NXGZw6jwR9d9f+0HBJUU51mDEpbWQe4xQrDYXaWy1ISpYdQojtJPWLIOh7Y9rjPOirrvPxusfrIpbjj9fGjy1WHFpICQgCT42tY1IXjM7ZlIBzDtC3ZgpIgWiw04muc/yI/GEtIkSNONTNjs532k7i4me4GT6A1nTiSOIvoLbotw1NW/RpRU+hsOKSe325EjsKNpBE2jSmPPM1EwOiN4dtCQjrZA/iSCbzeQZN6L9hukn8yj6Zo9Kxr2BxK3Cg47iQOsWLSImBEkHdz4UE9FsRPaxa4g6LcN+ckV6bGixr+EaUD93bU6fZCW0KWbRqRIEbyYqu2ntN5DalqQ2ykA/u0JdUOBVYADTQfOsls3ZTjqncjygpEdrMqFAk6qBndSsds3ENoKvvKzBykZl6d83HKpY0WB2071IVnXMEqKAZF7Sgg7iDGbf4U3sjbKn8ylqW6meyoSyBxzEKEnTTyrMYLZuLsptwgkZxCoMEkTffY0bv39pJkqCR/0yPSlq2idphxfVtNoWqwJzkpEm2ZREeU1P270acGFezuYXPk7GRptRmR2c24RIzRN5rm+z9p4pkAIAAnMJRqeM2mrB3phi8uV1IUP8yfjNLFJgmnEO5C0VFKspRkzfp4zXVcDs9hvtNtpQoiCRPjqfhWKZ6Yj3m1juIPxir3A7YS4JTPiCPWkUi+eULEQCOO8bx9cKdZxpKgnqiVKMAJIMk6DtZT6VTnG0gYopIWk3SQod4Mj4VRd49Yb/AHjbjf521JH8xEetV335lV0rB5i/qK3mytquYsoSFNKOTMlSgUnmEqR8CN1QdpLwLiyl5trMlRSrsgwRY/tFpSuZG6gyKdsOI9lyRwVcetx4U4jpN+NMHim48qtnehOEd/dOLQdQEOEz/wDW8FK8iKpcf0FxCD+zdQu+i0qbPmnOCfKgdVt9O40g9Io31l9r4F/DiX2VNpJgKstJJ07SCQJ5xVUXERPWpA3ydKg3R6UR/ei/xcmufLxDf/NHhNRXcSj8for5UHTR0xRvNSWOmjW8kdxrkSsSn8XoflSDiB+L0NFdyw3TZrc551Zt9IMK8kocS0tKvaSoJIM8QRevPHXfxehpSMWoaL+NB2LbvQHBPDrMIrqHL9mSWz3pMlP+UxyrluP2e5h3y06nKoXjUEHQpO8c/wBaPC9IXkey6fOtDsjHuY4qYWEOLIAblIJzTolQugniLcQRaueeETHSKNxwaSDv1jTcRVe6sGwG+pe0WS0pSCkhQUQoHcRrUHwJmvPEXMyDHpfwO6ktLhU8DuoNi3jRdZ2

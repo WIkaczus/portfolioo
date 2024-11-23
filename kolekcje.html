@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bleddeasne Kolekcje</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        :root {
+            --primary-yellow: #FFD700;
+            --secondary-yellow: #FFC800;
+            --dark-black: #111111;
+            --light-black: #2D2D2D;
+            --accent-gray: #4A4A4A;
+            --hover-yellow: #FFE44D;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 36px;
+            height: 60px;
+            background: var(--dark-black);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo a {
+            display: inline-block;
+            color: var(--primary-yellow);
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            animation: logoGlow 2s infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            from { text-shadow: 0 0 5px var(--primary-yellow), 0 0 10px var(--primary-yellow); }
+            to { text-shadow: 0 0 20px var(--primary-yellow), 0 0 30px var(--primary-yellow); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-yellow);
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-yellow);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-links a:hover {
+            color: var(--hover-yellow);
+            transform: translateY(-2px);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-icons img {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            filter: invert(1) sepia(1) saturate(5) hue-rotate(0deg);
+            transition: all 0.3s ease;
+        }
+
+        .nav-icons img:hover {
+            transform: rotate(10deg) scale(1.1);
+            filter: invert(1) sepia(1) saturate(5) hue-rotate(45deg);
+        }
+
+        .collections {
+            margin-top: 80px;
+            padding: 20px;
+            background: var(--light-black);
+            min-height: 100vh;
+        }
+
+        .section-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+            padding: 0 20px;
+            color: var(--primary-yellow);
+            position: relative;
+            animation: slideInTitle 1s ease-out;
+        }
+
+        @keyframes slideInTitle {
+            from { 
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .collection-card {
+            position: relative;
+            height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeInCard 0.8s ease-out forwards;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInCard {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .collection-card:nth-child(1) { animation-delay: 0.2s; }
+        .collection-card:nth-child(2) { animation-delay: 0.4s; }
+        .collection-card:nth-child(3) { animation-delay: 0.6s; }
+        .collection-card:nth-child(4) { animation-delay: 0.8s; }
+
+        .collection-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .collection-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .collection-card:hover .collection-image {
+            transform: scale(1.1);
+        }
+
+        .collection-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            transform: translateY(20px);
+            opacity: 0.9;
+            transition: all 0.4s ease;
+        }
+
+        .collection-card:hover .collection-overlay {
+            transform: translateY(0);
+            opacity: 1;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+        }
+
+        .collection-name {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--primary-yellow);
+            transform: translateY(10px);
+            transition: transform 0.4s ease;
+        }
+
+        .collection-card:hover .collection-name {
+            transform: translateY(0);
+        }
+
+        .collection-description {
+            font-size: 16px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+            transform: translateY(10px);
+            transition: all 0.4s ease 0.1s;
+        }
+
+        .collection-card:hover .collection-description {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .collection-link {
+            display: inline-block;
+            padding: 10px 25px;
+            background: var(--primary-yellow);
+            color: var(--dark-black);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s ease 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .collection-card:hover .collection-link {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .collection-link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255,255,255,0.2);
+            transform: translate(-50%, -50%) rotate(45deg) translateY(100%);
+            transition: transform 0.6s ease;
+        }
+
+        .collection-link:hover::before {
+            transform: translate(-50%, -50%) rotate(45deg) translateY(0);
+        }
+
+        .collection-link:hover {
+            background: var(--hover-yellow);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,215,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="Stronka.html">Bleddeasne</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="mezczyzni.html">Mężczyźni</a></li>
+            <li><a href="kobiety.html">Kobiety</a></li>
+            <li><a href="dzieci.html">Dzieci</a></li>
+            <li><a href="wyprzedaz.html">Wyprzedaż</a></li>
+            <li><a href="nowosci.html">Nowości</a></li>
+            <li><a href="kolekcje.html">Kolekcje</a></li>
+        </ul>
+        <div class="nav-icons">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTUuNSAxNGgtLjc5bC0uMjgtLjI3QzE1LjQxIDEyLjU5IDE2IDExLjExIDE2IDkuNSAxNiA1LjkxIDEzLjA5IDMgOS41IDNTMyA1LjkxIDMgOS41IDUuOTEgMTYgOS41IDE2YzEuNjEgMCAzLjA5LS41OSA0LjIzLTEuNTdsLjI3LjI4di43OWw1IDQuOTlMMjAuNDkgMTlsLTQuOTktNXptLTYgMEM3LjAxIDE0IDUgMTEuOTkgNSA5LjVTNy4wMSA1IDkuNSA1IDE0IDcuMDEgMTQgOS41IDExLjk5IDE0IDkuNSAxNHoiLz48L3N2Zz4=" alt="Search">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptMCAzYzEuNjYgMCAzIDEuMzQgMyAzcy0xLjM0IDMtMyAzLTMtMS4zNC0zLTMgMS4zNC0zIDMtM3ptMCAxNC4yYy0yLjUgMC00LjcxLTEuMjgtNi0zLjIyLjAzLTEuOTkgNC0zLjA4IDYtMy4wOCAxLjk5IDAgNS45NyAxLjA5IDYgMy4wOC0xLjI5IDEuOTQtMy41IDMuMjItNiAzLjIyeiIvPjwvc3ZnPg==" alt="Account">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNyAxOGMtMS4xIDAtMS45OS45LTEuOTkgMlM1LjkgMjIgNyAyMnMyLTAuOSAyLTItMC45LTItMi0yek0xIDJoMi4wMUw2LjYgMTEuNTloLTEuNThsLTEuMDEtNC4yNEgxVjJ6bTE2IDE2Yy0xLjEgMC0xLjk5LjktMS45OSAycy44OSAyIDEuOTkgMiAyLS45IDItMi0uOS0yLTItMnptLTEwLjA2LTlsMTQuMTQgMSAxLTEwSDQuOTFsLS43My0ySDFWNGgzLjE4bC4zMiAxLjI4TDcuNSA5eiIvPjwvc3ZnPg==" alt="Cart">
+        </div>
+    </nav>
+
+    <main class="collections">
+        <h1 class="section-title">Kolekcje Bleddeasne</h1>
+        
+        <div class="collection-grid">
+            <div class="collection-card">
+                <img class="collection-image" src="https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1824,c_limit/b7c9c5f1-4740-4bc9-8437-0f9857e11b8d/nike-sportswear.jpg" alt="Bleddeasne Sportswear">
+                <div class="collection-overlay">
+                    <div class="collection-name">Bleddeasne Sportswear</div>
+                    <div class="collection-description">Klasyczne style w nowoczesnym wydaniu</div>
+                    <a href="#" class="collection-link">Zobacz więcej</a>
+                </div>
+            </div>
+            
+            <div class="collection-card">
+                <img class="collection-image" src="https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1824,c_limit/371e15fd-36f0-4cb5-86a8-63a9044c3a80/nike-running.jpg" alt="Bleddeasne Running">
+                <div class="collection-overlay">
+                    <div class="collection-name">Bleddeasne Running</div>
+                    <div class="collection-description">Innowacyjne technologie dla biegaczy</div>
+                    <a href="#" class="collection-link">Zobacz więcej</a>
+                </div>
+            </div>
+            
+            <div class="collection-card">
+                <img class="collection-image" src="https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1824,c_limit/88c5a41c-f781-4c12-9d5a-c26e5a21568c/nike-basketball.jpg" alt="Bleddeasne Basketball">
+                <div class="collection-overlay">
+                    <div class="collection-name">Bleddeasne Basketball</div>
+                    <div class="collection-description">Profesjonalny sprzęt koszykarski</div>
+                    <a href="#" class="collection-link">Zobacz więcej</a>
+                </div>
+            </div>
+            
+            <div class="collection-card">
+                <img class="collection-image" src="https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1824,c_limit/5244b7c2-2c91-4477-9569-9e8e2ab1b8c0/nike-jordan.jpg" alt="Bleddeasne Pro">
+                <div class="collection-overlay">
+                    <div class="collection-name">Bleddeasne Pro</div>
+                    <div class="collection-description">Legendarna kolekcja inspirowana koszykówką</div>
+                    <a href="#" class="collection-link">Zobacz więcej</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

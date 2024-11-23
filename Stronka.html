@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>By:WIkaczek</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        :root {
+            --primary-yellow: #FFD700;
+            --secondary-yellow: #FFC800;
+            --dark-black: #111111;
+            --light-black: #2D2D2D;
+            --accent-gray: #4A4A4A;
+            --hover-yellow: #FFE44D;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 36px;
+            height: 60px;
+            background: var(--dark-black);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo a {
+            display: inline-block;
+            color: var(--primary-yellow);
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            animation: logoGlow 2s infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            from { text-shadow: 0 0 5px var(--primary-yellow), 0 0 10px var(--primary-yellow); }
+            to { text-shadow: 0 0 20px var(--primary-yellow), 0 0 30px var(--primary-yellow); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-yellow);
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s;
+            display: inline-block;
+            padding: 5px 10px;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-yellow);
+            transition: transform 0.3s ease;
+            transform: translateX(0);
+        }
+
+        .nav-links a:hover::before {
+            transform: translateX(100%);
+        }
+
+        .nav-links a:hover {
+            color: var(--hover-yellow);
+            transform: translateY(-2px);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-icons img {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            filter: invert(1) sepia(1) saturate(5) hue-rotate(0deg);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-icons img:hover {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .hero {
+            margin-top: 60px;
+            height: 100vh;
+            background: linear-gradient(45deg, var(--dark-black), var(--light-black));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary-yellow);
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, transparent 100%);
+            z-index: 1;
+            animation: shimmer 3s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+            animation: slideIn 1s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            color: #ffffff;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out 1s both;
+        }
+
+        .button {
+            padding: 12px 24px;
+            background: var(--primary-yellow);
+            color: var(--dark-black);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 2px solid var(--primary-yellow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%) rotate(35deg);
+            transition: transform 0.5s;
+        }
+
+        .button:hover::after {
+            transform: translate(-50%, -50%) rotate(35deg) translateX(100%);
+        }
+
+        .button:hover {
+            background: var(--hover-yellow);
+            border-color: var(--hover-yellow);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .button:nth-child(2) {
+            background: transparent;
+            color: var(--primary-yellow);
+        }
+
+        .button:nth-child(2):hover {
+            background: var(--primary-yellow);
+            color: var(--dark-black);
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero {
+            background: linear-gradient(
+                45deg,
+                var(--dark-black),
+                var(--light-black),
+                var(--accent-gray)
+            );
+            background-size: 200% 200%;
+            animation: gradientAnimation 15s ease infinite;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="Stronka.html">By:WIkaczek</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="mezczyzni.html">Mężczyźni</a></li>
+            <li><a href="kobiety.html">Kobiety</a></li>
+            <li><a href="dzieci.html">Dzieci</a></li>
+            <li><a href="wyprzedaz.html">Wyprzedaż</a></li>
+            <li><a href="nowosci.html">Nowości</a></li>
+            <li><a href="kolekcje.html">Kolekcje</a></li>
+        </ul>
+        <div class="nav-icons">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTUuNSAxNGgtLjc5bC0uMjgtLjI3QzE1LjQxIDEyLjU5IDE2IDExLjExIDE2IDkuNSAxNiA1LjkxIDEzLjA5IDMgOS41IDNTMyA1LjkxIDMgOS41IDUuOTEgMTYgOS41IDE2YzEuNjEgMCAzLjA5LS41OSA0LjIzLTEuNTdsLjI3LjI4di43OWw1IDQuOTlMMjAuNDkgMTlsLTQuOTktNXptLTYgMEM3LjAxIDE0IDUgMTEuOTkgNSA5LjVTNy4wMSA1IDkuNSA1IDE0IDcuMDEgMTQgOS41IDExLjk5IDE0IDkuNSAxNHoiLz48L3N2Zz4=" alt="Search">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptMCAzYzEuNjYgMCAzIDEuMzQgMyAzcy0xLjM0IDMtMyAzLTMtMS4zNC0zLTMgMS4zNC0zIDMtM3ptMCAxNC4yYy0yLjUgMC00LjcxLTEuMjgtNi0zLjIyLjAzLTEuOTkgNC0zLjA4IDYtMy4wOCAxLjk5IDAgNS45NyAxLjA5IDYgMy4wOC0xLjI5IDEuOTQtMy41IDMuMjItNiAzLjIyeiIvPjwvc3ZnPg==" alt="Account">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNyAxOGMtMS4xIDAtMS45OS45LTEuOTkgMlM1LjkgMjIgNyAyMnMyLTAuOSAyLTItMC45LTItMi0yek0xIDJoMi4wMUw2LjYgMTEuNTloLTEuNThsLTEuMDEtNC4yNEgxVjJ6bTE2IDE2Yy0xLjEgMC0xLjk5LjktMS45OSAycy44OSAyIDEuOTkgMiAyLS45IDItMi0uOS0yLTItMnptLTEwLjA2LTlsMTQuMTQgMSAxLTEwSDQuOTFsLS43My0ySDFWNGgzLjE4bC4zMiAxLjI4TDcuNSA5eiIvPjwvc3ZnPg==" alt="Cart">
+        </div>
+    </nav>
+
+    <main class="hero">
+        <h1>25% OFF</h1>
+        <p>25% rabatu na nieprzecenione modele dla członków i członkiń By:WIkaczek. Użyj kodu SCORE24 przy zakupach za co najmniej 220 zł.</p>
+        <div class="buttons">
+            <a href="#" class="button">Przeglądaj</a>
+            <a href="#" class="button">Warunki promocji</a>
+        </div>
+    </main>
+</body>
+</html>
